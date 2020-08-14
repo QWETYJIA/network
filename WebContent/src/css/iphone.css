@@ -1,0 +1,70 @@
+@media only screen and (max-width: 768px){
+    .layui-side{
+    width: 150px !important;
+  }
+
+  .layui-nav{
+    padding: 0 5px !important;
+  }
+  .layui-layout-admin .layui-footer{
+    left:150px !important;
+  }
+  #onload,#tij{
+    margin:10px 500px 40px 0px;
+  }
+  }
+  @media only screen and (max-width: 425px){
+    /* 头部 */
+    .layui-layout-left{
+      width:100px !important;
+      height:60px !important;
+      left: 100px !important;
+    }
+    .layui-layout-left .layui-nav-item{
+      visibility: hidden !important;
+      width: 0px !important;
+    }
+    .layui-layout-left .layui-nav-item:first-child{
+      position: absolute;
+      visibility: visible !important;
+      width: 80px !important;
+    }
+    .layui-layout-left .layui-nav-item a{
+      padding: 0 !important;
+    }
+    .layui-side-scroll{
+      width: 80px !important;
+    }
+   
+    .layui-side-scroll .layui-nav{
+      width:80px !important;
+    }
+    .layui-nav-tree{
+      width: 80px !important;
+    }
+    .layui-side{
+    width: 80px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .layui-layout-admin .layui-logo{
+    width: 80px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .layui-side-scroll .layui-nav-item{
+    width: 80px !important;
+    margin: 0 !important;
+  }
+  .layui-side-scroll .layui-nav-item a{
+    padding: 0px !important;
+    margin: 0 !important;
+  }
+  .layui-layout-admin .layui-footer{
+    left: 80px !important;
+  }
+  .layui-body{
+    left: 80px;
+  }
+  
+  }

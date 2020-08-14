@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+ 
+	<head>
+		<meta charset="UTF-8">
+		<title>文件上传进度条</title>
+		
+    <link rel="stylesheet" type="text/css" href="./src/css/layui.css" />
+    <style>
+      body{
+        margin:10px;
+      }
+      .layui-btn{
+        background-color:  #393D49 !important ;
+      }
+      .layui-progress{
+          display: none;
+      }
+    </style>
+	</head>
+ 
+	<body>
+		<button type="button" class="layui-btn" id="chooseFile">
+  			<i class="layui-icon">&#xe67c;</i>选择文件
+		</button> 文件名称: <span id="file"></span>
+		<div style="height: 20px;"></div>
+		<button type="button" class="layui-btn" id="uploadBtn">
+  			<i class="layui-icon">&#xe67c;</i>上传文件
+		</button>
+		<div style="height: 20px;"></div>
+		<div class="layui-progress layui-progress-big" lay-showPercent="yes" lay-filter="progressBar">
+			<div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+        </div>
+       
+    </body>
+    <script src="./src/js/jquery-1.10.1.js" type="text/javascript"></script>
+    <script src="./src/layui.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    layui.use(['upload','element','layer'], function(){
+    var upload = layui.upload,element = layui.element,layer = layui.layer;
+        element.init();
+            
+        
+        upload.render({
+            elem: '#chooseFile', // 文件选择
+            accept:'file',
+            url: 'http://47.97.170.173:8080/net/oneself/upload.do',
+            auto: false, // 设置不自动提交
+            bindAction: '#uploadBtn', // 提交按钮
+            
+            progress: function(e , percent) {
+                $('.layui-progress').show()
+                console.log("进度：" +parseInt((percent.loaded/percent.total)*100));
+                
+                element.progress('progressBar',parseInt((percent.loaded/percent.total)*100)  + '%');
+            },
+            choose: function(obj) {
+                obj.preview(function(index, file, result) {
+                    $("#file").html(file.name);
+                });
+            },
+            done: function(res) {
+                layer.msg("上传成功");
+                setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                    window.location.reload();//页面刷新
+                    },2000);
+            },
+            error: function(res) {
+                layer.msg("上传失败");
+                setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                    window.location.reload();//页面刷新
+                    },2000);
+            }
+        })
+    });
+    </script>
+</html>

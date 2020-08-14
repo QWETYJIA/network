@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/css/login.css">
+    <title>海创网盘</title>
+</head>
+<body>
+            <div class="container">
+                <div class="login">
+                  <div class="text">登录</div>
+                  <div class="form-item">
+                    <input type="text" placeholder="用户名" id="textword" value="">
+                    <input type="password" placeholder="密码" id="password" value="">
+                    <div class="false"  style="display: none;"><p>*手机号或密码有错误</p></div>
+                  </div>
+                  <div class="loginbtn"  onclick="isout()">登录</div>
+                  <div class="btn-back"></div>
+                  <div class="other">
+                    <span>
+                       <input type="checkbox" id="islogin"> <label for="islogin">保存账号密码</label>
+                    </span>
+                    <a href="javascript:void(0);" >忘记密码？</a>
+                  </div>
+                </div>
+                <iframe src="./bottom.html" id="iframebm"></iframe>
+                </div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+<script src="./src/js/jquery.js"></script>
+<script src="http://cdn.suoluomei.com/common/js2.0/axios/axios.min.js"></script>
+<script>
+    window.onload=function(){
+        //获取账号和密码
+        var textword=document.querySelector("#textword");
+        var password=document.querySelector("#password");
+        //获取登录按钮
+        var loginbtn=document.querySelector(".loginbtn");
+        //获取自动登录选项,当 islogin.value为true要存储数据
+        var islogin=document.querySelector("#islogin");    
+        var Id = localStorage.getItem("textword"); 
+        console.log(Id);
+        if(Id != null) //如果缓存中有数据，则加载出来
+        { 
+            document.getElementById("textword").value = Id; 
+            document.getElementById("password").value = localStorage.getItem("password"); 
+            document.getElementById("islogin").checked = "checked"; 
+        } 
+
+             //点击登录按钮得到输入的账号与密码
+            console.log(textword.value,password.value)
+    }
+    function isout(){
+//发送请求         
+let result = axios({
+                          method: 'post',
+                          url: 'http://47.97.170.173:8080/net/oneself/login.do',
+                          data:{username:textword.value,password:password.value},
+                          transformRequest:[function(data){
+                              let ret = '';
+                              for(let i in data){
+                                  ret += encodeURIComponent(i)+'='+encodeURIComponent(data[i])+"&";
+                              }
+                              return ret;
+                          }],
+                          header:{
+                              'Content-Type':'application/x-www-form-urlencoded'
+                          }
+                              }).then(function (data) {
+                          console.log(data);
+                          console.log(data.data.result);
+                          if(data.data.result=="登陆成功！"){
+                            var check = document.getElementById("islogin");      
+        if(check.checked) //判断记住密码项是否勾选，是则记住密码到本地缓存 
+        { 
+            var id = document.getElementById("textword").value; 
+            var pwd = document.getElementById("password").value; 
+            console.log(check.checked);
+            console.log(id,pwd);
+            localStorage.setItem("textword", id); 
+            localStorage.setItem("password", pwd); 
+           
+        } else //否则就移除本地缓存 
+        { 
+            localStorage.removeItem("textword"); 
+            localStorage.removeItem("password"); 
+        } 
+
+          window.location.href="./main.html";
+                                }
+                                  else{
+                                    alert("账号或密码有误");
+                                  }
+                        })
+                        .catch(function (error) {
+                          alert("登录失败")
+                          console.log(error);
+                });
+            //得到是否选择了自动登录按钮，需要保存数据，下一次自动登录， islogin.checked===true的话，选择了自动登录 
+            console.log(islogin.checked);
+
+    }
+          
+    
+    
+</script>
+</html>

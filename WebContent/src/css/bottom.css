@@ -1,0 +1,38 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+  a{
+    display:inline-block;
+  text-decoration: none;
+  color: #fbc2eb;
+  margin-left: 50px;
+}
+.bottom{
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  background-color: white;
+  bottom: 0;
+}
+.footer{
+  margin-top: 10px;
+  margin-left:50px;
+  color:grey;
+}
+.footer a{
+  font-size: 15px;
+  padding-right: 15px;
+  color:grey;
+  margin-left:0;
+
+}
+.footer a:not(:first-child){
+  margin-left:15px;
+}
+.footer a:not(:last-child){
+  border-right: 1px grey solid;
+}
+.bottom1,.bottom2{
+  margin-top: 10px;
+}
